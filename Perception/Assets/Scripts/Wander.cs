@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Wander : MonoBehaviour
 {
-    public float radius =  8;
+    public float radius = 8;
     public float offset = 10;
     public NavMeshAgent agent;
     public int intervalTime = 1;
@@ -16,26 +16,22 @@ public class Wander : MonoBehaviour
         StartCoroutine(NewHeading());
     }
     // Update is called once per frame
-    void Update()
-    {
-        agent.destination = target;
-    }
-
     public Vector3 wander()
     {
-        Vector3 localTarget = UnityEngine.Random.insideUnitCircle * radius;
-        localTarget += new Vector3(0, 0, offset);
-        Vector3 worldTarget = transform.TransformPoint(localTarget);
-        worldTarget.y = 0f;
-        return worldTarget;
-        
+        Vector3 localTarget = UnityEngine.Random.insideUnitSphere * radius;
+        localTarget += transform.position;
+
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(localTarget, out navHit, radius, -1);
+
+        return navHit.position;
     }
 
     IEnumerator NewHeading()
     {
         while (true)
         {
-            target = wander();
+            agent.SetDestination(wander());
             yield return new WaitForSeconds(intervalTime);
         }
     }
