@@ -21,7 +21,7 @@ public class Wander : MonoBehaviour
         agent.destination = target;
     }
 
-    Vector3 wander()
+    public Vector3 wander()
     {
         Vector3 localTarget = UnityEngine.Random.insideUnitCircle * radius;
         localTarget += new Vector3(0, 0, offset);

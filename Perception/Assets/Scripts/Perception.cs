@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 
 public class Perception : MonoBehaviour
 {
+    public Wander wander;
+    
     // Camera
     public Camera frustum;
     LayerMask mask;
 
     // Zombies
+    public NavMeshAgent agent;
     public GameObject zombiePrefab;
     public int numZombies;
     GameObject[] zombies;
@@ -29,6 +34,8 @@ public class Perception : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        agent.destination = target;
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, frustum.farClipPlane, mask);
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(frustum);
 
@@ -45,27 +52,24 @@ public class Perception : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, frustum.farClipPlane, mask))
                     if (hit.collider.gameObject.CompareTag("Target"))
                     {
-                        
+                        Seek();
                     }
             }
         }
-    }
-    Vector3 wander()
-    {
-        Vector3 localTarget = UnityEngine.Random.insideUnitCircle * radius;
-        localTarget += new Vector3(0, 0, offset);
-        Vector3 worldTarget = transform.TransformPoint(localTarget);
-        worldTarget.y = 0f;
-        return worldTarget;
-
     }
 
     IEnumerator NewHeading()
     {
         while (true)
         {
-            target = wander();
+            target = wander.wander();
             yield return new WaitForSeconds(intervalTime);
         }
     }
+
+    void Seek()
+    {
+        agent.nextPosition = transform.position;
+    }
+
 }
