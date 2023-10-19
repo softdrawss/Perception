@@ -8,7 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Perception : MonoBehaviour
 {
     public Wander wander;
-    
+
     // Camera
     public Camera frustum;
     LayerMask mask;
@@ -16,13 +16,10 @@ public class Perception : MonoBehaviour
     // Zombies
     public NavMeshAgent agent;
     public GameObject zombiePrefab;
-    public int numZombies;
-    GameObject[] zombies;
+    public GameObject target;
+    
     float detected;
 
-    Vector3 target;
-    float radius = 8;
-    float offset = 10;
     int intervalTime = 1;
 
     // Start is called before the first frame update
@@ -34,7 +31,7 @@ public class Perception : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = target;
+        agent.destination = target.transform.position;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, frustum.farClipPlane, mask);
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(frustum);
@@ -62,7 +59,7 @@ public class Perception : MonoBehaviour
     {
         while (true)
         {
-            target = wander.wander();
+            target.transform.position = wander.wander();
             yield return new WaitForSeconds(intervalTime);
         }
     }
