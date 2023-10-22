@@ -23,7 +23,7 @@ public class Wander : MonoBehaviour
 
     public Vector3 wander()
     {
-        Vector3 localTarget = UnityEngine.Random.insideUnitCircle * radius;
+        Vector3 localTarget = UnityEngine.Random.insideUnitSphere * radius;
         localTarget += new Vector3(0, 0, offset);
         Vector3 worldTarget = transform.TransformPoint(localTarget);
         worldTarget.y = 0f;
