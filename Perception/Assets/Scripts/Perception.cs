@@ -34,24 +34,36 @@ public class Perception : MonoBehaviour
 
     IEnumerator NewHeading()
     {
-        while (!detected)
+        while (enabled)
         {
-            if (Search())
+            while (!detected)
             {
-                this.transform.parent.BroadcastMessage("Detected", hit.collider.gameObject.transform);
-                print("Found!");
+                if (Search())
+                {
+                    transform.parent.BroadcastMessage("Detected", hit.collider.gameObject);
+                }
+                targetVec = wander.wander();
+                agent.destination = targetVec;
+                yield return new WaitForSeconds(intervalTime);
             }
-            targetVec = wander.wander();
-            agent.transform.position = targetVec;
-            yield return new WaitForSeconds(intervalTime);
-        }
      
-        Seek();
+            Seek();
+            yield return null;
+        }
+        
+    }
+
+    void Detected(GameObject pos)
+    {
+        print("Found");
+        detected = true;
+        target = pos;
     }
 
     void Seek()
     {
-        agent.nextPosition = target.transform.position;
+        print("Search the human!");
+        agent.destination = target.transform.position;
     }
 
     bool Search()
@@ -73,9 +85,6 @@ public class Perception : MonoBehaviour
                 {
                     if (hit.collider.gameObject.CompareTag("Target"))
                     {
-                        detected = true;
-                        target = hit.collider.gameObject;
-                        print("Founded the human!");
                         return true;
                     }
                 }

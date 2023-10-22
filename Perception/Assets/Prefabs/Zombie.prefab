@@ -57,8 +57,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.07
-  far clip plane: 1000
-  field of view: 70
+  far clip plane: 20
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 4280652088716570057}
   - component: {fileID: 2011930767676435164}
   - component: {fileID: 4036565283052704226}
+  - component: {fileID: 1100405302785781787}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -219,10 +220,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5ac3cad3a3d3448a0d5e235e7342d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wander: {fileID: 0}
+  wander: {fileID: 1100405302785781787}
   frustum: {fileID: 1755261270368847544}
   mask:
     serializedVersion: 2
     m_Bits: 8
   agent: {fileID: 2011930767676435164}
   zombiePrefab: {fileID: 4270832122694477477}
+--- !u!114 &1100405302785781787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270832122694477477}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ffc1c42004ba648bcb3386a06d8f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 8
+  offset: 10
+  agent: {fileID: 2011930767676435164}
+  intervalTime: 1

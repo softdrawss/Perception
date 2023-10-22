@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    public Perception perception;
+    public GameObject zombiePrefab;
     public int numOfZombies = 10;
     GameObject[] zombies;
 
@@ -20,8 +20,10 @@ public class Spawn : MonoBehaviour
             Vector3 randomize = Random.insideUnitSphere;
             pos.y = 0;
 
-            zombies[i] = (GameObject)Instantiate(perception.zombiePrefab, pos,
+            zombies[i] = (GameObject)Instantiate(zombiePrefab, pos,
                               Quaternion.LookRotation(randomize));
+
+            zombies[i].transform.parent = this.transform;
         }
     }
 
