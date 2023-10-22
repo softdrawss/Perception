@@ -17,8 +17,9 @@ public class Perception : MonoBehaviour
     public NavMeshAgent agent;
     public GameObject zombiePrefab;
     public GameObject target;
-    
-    float detected;
+    Vector3 targetVec;
+
+    bool detected = false;
 
     int intervalTime = 1;
 
@@ -31,8 +32,6 @@ public class Perception : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = target.transform.position;
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, frustum.farClipPlane, mask);
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(frustum);
 
@@ -49,7 +48,7 @@ public class Perception : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, frustum.farClipPlane, mask))
                     if (hit.collider.gameObject.CompareTag("Target"))
                     {
-                        Seek();
+                        detected = true;                    
                     }
             }
         }
@@ -57,9 +56,9 @@ public class Perception : MonoBehaviour
 
     IEnumerator NewHeading()
     {
-        while (true)
+        if (!detected)
         {
-            target.transform.position = wander.wander();
+            agent.destination = wander.wander();
             yield return new WaitForSeconds(intervalTime);
         }
     }
