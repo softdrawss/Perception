@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 1262263211}
   - component: {fileID: 1262263215}
   - component: {fileID: 1262263216}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Target
   m_TagString: Target
   m_Icon: {fileID: 0}
@@ -712,9 +712,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wander: {fileID: 0}
   frustum: {fileID: 6803545821188698909}
+  mask:
+    serializedVersion: 2
+    m_Bits: 8
   agent: {fileID: 6803545821188698911}
   zombiePrefab: {fileID: 6803545821188698908}
-  target: {fileID: 1262263210}
 --- !u!195 &6803545821188698911 stripped
 NavMeshAgent:
   m_CorrespondingSourceObject: {fileID: 2011930767676435164, guid: e34adfae6f25f124cbbe039fbc59b69f, type: 3}

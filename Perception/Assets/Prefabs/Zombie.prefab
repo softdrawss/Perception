@@ -221,6 +221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wander: {fileID: 0}
   frustum: {fileID: 1755261270368847544}
+  mask:
+    serializedVersion: 2
+    m_Bits: 8
   agent: {fileID: 2011930767676435164}
   zombiePrefab: {fileID: 4270832122694477477}
-  target: {fileID: 0}
