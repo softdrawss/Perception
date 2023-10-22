@@ -36,10 +36,13 @@ public class Perception : MonoBehaviour
     {
         while (!detected)
         {
-            if(Search())
+            if (Search())
+            {
                 this.transform.parent.BroadcastMessage("Detected", hit.collider.gameObject.transform);
-            
-            agent.destination = wander.wander();
+                print("Found!");
+            }
+            targetVec = wander.wander();
+            agent.transform.position = targetVec;
             yield return new WaitForSeconds(intervalTime);
         }
      
@@ -72,6 +75,7 @@ public class Perception : MonoBehaviour
                     {
                         detected = true;
                         target = hit.collider.gameObject;
+                        print("Founded the human!");
                         return true;
                     }
                 }
